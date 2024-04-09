@@ -28,9 +28,9 @@ public class StudentServiceTests {
     @BeforeEach
     public void setup() {
         student = new Student();
-        student.setFirstName("Eva");
+        student.setFirstName("Evariste");
         student.setLastName("Njango");
-        student.setEmail("eva@gxm.de");
+        student.setEmail("evariste@gxm.de");
     }
 
     // JUnit test for save student method
