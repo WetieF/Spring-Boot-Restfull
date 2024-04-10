@@ -95,4 +95,45 @@ public class StudentServiceTests {
         // then - verify the output
         Assertions.assertThat(savedStudent).isNotNull();
     }
+
+    // JUnit test for delete student method
+    @DisplayName("JUnit test for delete student method")
+    @Test
+    public void givenStudentId_whenDelete_thenReturnNothing() {
+
+        // given -precondition or setup
+        Long studentId = 1L;
+
+        BDDMockito.given(studentRepository.findById(studentId)).willReturn(Optional.of(student));
+        BDDMockito.willDoNothing().given(studentRepository).delete(student);
+
+        // when - action or behaviour that we are going to test
+        studentService.deleteStudent(studentId);
+
+        // then - verify the output
+        Mockito.verify(studentRepository, Mockito.times(1)).delete(student);
+    }
+
+    // JUnit test for update student method
+    @DisplayName("JUnit test for update student method")
+    @Test
+    public void givenStudentObject_whenUpdate_thenReturnStudent() {
+
+        // given -precondition or setup
+        Long studentId = 1L;
+        Student student1 = new Student();
+        student1.setFirstName("Francis");
+        student1.setLastName("Wetie");
+        student1.setEmail("francis@gmail.de");
+
+        BDDMockito.given(studentRepository.findById(studentId)).willReturn(Optional.of(student1));
+        BDDMockito.given(studentRepository.save(Mockito.any(Student.class))).willReturn(student1);
+
+        // when - action or behaviour that we are going to test
+        Student savedStudent = studentService.updateStudentById(student1, studentId);
+
+        // then - verify the output
+        Assertions.assertThat(savedStudent).isNotNull();
+        Assertions.assertThat(savedStudent.getFirstName()).isEqualTo("Francis");
+    }
 }
