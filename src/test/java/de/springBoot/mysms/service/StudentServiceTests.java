@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTests {
@@ -75,5 +76,23 @@ public class StudentServiceTests {
         // then - verify the output
         Assertions.assertThat(savedStudents).isNotNull();
         Assertions.assertThat(savedStudents.size()).isEqualTo(2);
+    }
+
+    // JUnit test for searchStudentById method
+    @DisplayName("JUnit test for searchStudentById method")
+    @Test
+    public void givenStudentObject_whenFindById_thenReturnStudentObject() {
+
+        // given -precondition or setup
+        Long studentId = 1L;
+        Student mockStudent = BDDMockito.mock(Student.class);
+
+        BDDMockito.given(studentRepository.findById(studentId)).willReturn(Optional.of(mockStudent));
+
+        // when - action or behaviour that we are going to test
+        Student savedStudent = studentService.searchStudentById(studentId);
+
+        // then - verify the output
+        Assertions.assertThat(savedStudent).isNotNull();
     }
 }
