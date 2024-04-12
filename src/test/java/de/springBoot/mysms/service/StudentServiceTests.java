@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,32 @@ public class StudentServiceTests {
         Assertions.assertThat(savedStudents).isNotNull();
         Assertions.assertThat(savedStudents.size()).isEqualTo(2);
     }
+
+    // JUnit test for find all students method
+    @DisplayName("JUnit test for find all students method negative scenario")
+    @Test
+    public void givenEmptyStudentList_whenFindAll_thenReturnEmptyStudentList() {
+
+        // given -precondition or setup
+        Student student1 = new Student();
+        student1.setFirstName("Francis");
+        student1.setLastName("Wetie");
+        student1.setEmail("francis@hotmail.de");
+
+        List<Student> students = new ArrayList<>();
+        students.add(student);
+        students.add(student1);
+
+        BDDMockito.given(studentRepository.findAll()).willReturn(Collections.emptyList());
+
+        // when - action or behaviour that we are going to test
+        List<Student> savedStudents = studentService.getAllStudents();
+
+        // then - verify the output
+        Assertions.assertThat(savedStudents).isEmpty();
+        Assertions.assertThat(savedStudents.size()).isEqualTo(0);
+    }
+
 
     // JUnit test for searchStudentById method
     @DisplayName("JUnit test for searchStudentById method")
